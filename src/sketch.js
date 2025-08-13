@@ -23,7 +23,7 @@ let elCanvas;
 let imgA;
 
 const sketch = ({ width, height, canvas }) => {
-  canvas.id = "main-canvas";
+  // canvas.id = "main-canvas";
   const imgACanvas = document.createElement('canvas');
   const imgAContext = imgACanvas.getContext('2d');
 
