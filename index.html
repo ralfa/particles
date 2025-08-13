@@ -1,13 +1,44 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Particles</title>
-    <script type="module" crossorigin src="/assets/index-D_xDXBF-.js"></script>
+    <title>Canvas Sketch no Vite</title>
+    <style>
+      body {
+        margin: 0;
+        background: #000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        color: white;
+        font-family: sans-serif;
+      }
+
+      canvas {
+        display: block;
+        max-width: 100vw;
+        max-height: 100vh;
+      }
+
+      .p {
+        margin-top: 20px;
+        font-size: 2rem;
+        font-weight: bold;
+        letter-spacing: 2px;
+      }
+
+      canvas:not([id="main-canvas"]) {
+        display: none;
+      }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
+    <p>Play with me 👇</p>
+    <div>
+      <script type="module" src="/src/sketch.js"></script>
+    </div>
   </body>
 </html>
