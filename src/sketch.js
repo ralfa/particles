@@ -4,7 +4,6 @@ import math from 'canvas-sketch-util/math';
 import eases from 'eases';
 import colormap from 'colormap';
 
-// Configurações da tela
 const settings = {
   dimensions: [1080, 1080],
   animate: true,
@@ -13,16 +12,25 @@ const settings = {
 const particles = [];
 const cursor = { x: 9999, y: 9999 };
 
-// Colormap
-const colors = colormap({
-  colormap: 'viridis',
-  nshades: 20,
-});
+const colors = colormap({ colormap: 'viridis', nshades: 20 });
 
 let elCanvas;
 let imgA;
 
+// Função para carregar a imagem da pasta public
+const loadImage = url =>
+  new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = url;
+  });
+
 const sketch = ({ width, height, canvas }) => {
+  canvas.id = "main-canvas";
+  elCanvas = canvas;
+  canvas.addEventListener('mousedown', onMouseDown);
+
   const imgACanvas = document.createElement('canvas');
   const imgAContext = imgACanvas.getContext('2d');
 
@@ -37,9 +45,6 @@ const sketch = ({ width, height, canvas }) => {
   let dotRadius = 11;
   let cirRadius = 0.1;
   const fitRadius = dotRadius;
-
-  elCanvas = canvas;
-  canvas.addEventListener('mousedown', onMouseDown);
 
   for (let i = 0; i < numCircles; i++) {
     const circumference = Math.PI * 2 * cirRadius;
@@ -64,7 +69,6 @@ const sketch = ({ width, height, canvas }) => {
       const colA = `rgb(${r}, ${g}, ${b})`;
 
       const radius = math.mapRange(r, 0, 255, 1, 12);
-
       const particle = new Particle({ x, y, radius, colA });
       particles.push(particle);
     }
@@ -94,6 +98,7 @@ const sketch = ({ width, height, canvas }) => {
   };
 };
 
+// Eventos do cursor
 const onMouseDown = e => {
   window.addEventListener('mousemove', onMouseMove);
   window.addEventListener('mouseup', onMouseUp);
@@ -114,23 +119,7 @@ const onMouseUp = () => {
   cursor.y = 9999;
 };
 
-const loadImage = url => {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.onload = () => resolve(img);
-    img.onerror = reject;
-    img.src = url;
-  });
-};
-
-const start = async () => {
-  // URL da imagem no Vite — precisa dessa sintaxe para funcionar no build
-  imgA = await loadImage('/images/image-01.png');
-  canvasSketch(sketch, settings);
-};
-
-start();
-
+// Classe Particle
 class Particle {
   constructor({ x, y, radius = 10, colA }) {
     this.x = x;
@@ -186,3 +175,11 @@ class Particle {
     context.restore();
   }
 }
+
+// Inicia o sketch
+const start = async () => {
+  imgA = await loadImage('/images/image-01.png'); // agora pega da pasta public
+  canvasSketch(sketch, settings);
+};
+
+start();
