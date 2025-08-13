@@ -23,7 +23,6 @@ let elCanvas;
 let imgA;
 
 const sketch = ({ width, height, canvas }) => {
-  // canvas.id = "main-canvas";
   const imgACanvas = document.createElement('canvas');
   const imgAContext = imgACanvas.getContext('2d');
 
@@ -126,7 +125,7 @@ const loadImage = url => {
 
 const start = async () => {
   // URL da imagem no Vite — precisa dessa sintaxe para funcionar no build
-  imgA = await loadImage(new URL('./images/image-01.png', import.meta.url).href);
+  imgA = await loadImage('/images/image-01.png');
   canvasSketch(sketch, settings);
 };
 
